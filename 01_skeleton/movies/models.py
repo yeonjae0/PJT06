@@ -3,12 +3,10 @@ from django.conf import settings
 
 class Movie(models.Model):
     # objects = models.Manager()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=20)
     description = models.TextField()
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
-    def __str__(self):
-        return f'{self.id}번째글 - {self.title}'
 
 
 class Comment(models.Model):

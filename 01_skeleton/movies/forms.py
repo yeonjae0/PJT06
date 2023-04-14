@@ -5,12 +5,13 @@ from .models import Movie, Comment
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = ('title', 'description')
+        # fields = ('title', 'description')
+        exclude = (
+            'user',
+            'like_users'
+        )
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = (
-            'model',
-            'user',
-        )
+        fields = ('content',)

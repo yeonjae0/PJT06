@@ -16,7 +16,9 @@ def create(request):
     if request.method == 'POST':
         form = MovieForm(request.POST)
         if form.is_valid():
-            movie = form.save()
+            movie = form.save(commit=False)
+            movie.user = request.user
+            movie.save()
             return redirect('movies:detail', movie.pk)
     else:
         form = MovieForm()
@@ -32,8 +34,8 @@ def detail(request, pk):
     comments = movie.comment_set.all()
     context = {
         'movie': movie,
-        'comments':comments,
         'comment_form':comment_form,
+        'comments':comments,
     }
     return render(request, 'movies/detail.html', context)
 
@@ -78,7 +80,7 @@ def comments_create(request, pk):
         comment.movie = movie
         comment.user = request.user
         comment.save()
-    return redirect('articles:detail', movie.pk)
+    return redirect('movies:detail', movie.pk)
 
 
 def comments_delete(request, movie_pk, comment_pk):
@@ -87,7 +89,7 @@ def comments_delete(request, movie_pk, comment_pk):
     comment = Comment.objects.get(movie_pk=comment_pk)
     if request.user == comment.user:
         comment.delete()
-    return redirect('articles:detail', movie_pk)
+    return redirect('movies:detail', movie_pk)
 
 
 @require_POST
