@@ -81,6 +81,6 @@ def follow(request, user_pk):
             if person.followers.filter(pk=request.user.pk).exists():
                 person.followers.remove(request.user)
             else:
-                person.followes.add(request.user)
+                person.followers.add(request.user)
         return redirect('accounts:profile', person.username)
     return redirect('accounts:login')
