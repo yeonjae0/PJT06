@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 class Movie(models.Model):
+    objects = models.Manager()
     title = models.CharField(max_length=20)
     description = models.TextField()
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -11,6 +12,7 @@ class Movie(models.Model):
 
 
 class Comment(models.Model):
+    objects = models.Manager()
     content = models.CharField(max_length=100)
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie_id = models.ForeignKey(Movie, on_delete=models.CASCADE)
