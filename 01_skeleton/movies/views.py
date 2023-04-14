@@ -31,7 +31,7 @@ def create(request):
 def detail(request, pk):
     movie = Movie.objects.get(pk=pk)
     comment_form = CommentForm()
-    comments = movie.comment_set.all()
+    comments = Comment.objects.all()
     context = {
         'movie': movie,
         'comment_form':comment_form,
